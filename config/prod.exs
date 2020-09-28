@@ -14,6 +14,12 @@ config :playground, PlaygroundWeb.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 443]
 
+config :playground, Playground.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  ssl: true,
+  pool_size: System.get_env("POOL_SIZE")
+
 # Do not print debug messages in production
 config :logger, level: :info
 
