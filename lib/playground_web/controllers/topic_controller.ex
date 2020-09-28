@@ -5,6 +5,7 @@ defmodule PlaygroundWeb.TopicController do
 
   plug :put_layout, "topics.html"
   plug Playground.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+  plug :require_topic_owner when action in [:edit, :update, :delete]
 
   def index(conn, _params) do
     topics = Playground.Repo.all(Topic)
@@ -71,7 +72,15 @@ defmodule PlaygroundWeb.TopicController do
     |> redirect(to: Routes.topic_path(conn, :index))
   end
 
-  def redirect_to_index(conn, _params) do
-    redirect(conn, to: Routes.topic_path(conn, :index))
+  def require_topic_owner(conn, _params) do
+    %{ params: %{ "id" => topic_id } } = conn
+    if  Playground.Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "Action allowed only to owner")
+      |> redirect(to: Routes.topic_path(conn, :index))
+      |> halt()
+    end
   end
 end
