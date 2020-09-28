@@ -4,6 +4,7 @@ defmodule PlaygroundWeb.TopicController do
   alias Playground.Topic
 
   plug :put_layout, "topics.html"
+  plug Playground.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
 
   def index(conn, _params) do
     topics = Playground.Repo.all(Topic)
