@@ -2,12 +2,11 @@ use Mix.Config
 
 # Configure your database
 config :playground, Playground.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "playground_dev",
-  hostname: "localhost",
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  adapter: Ecto.Adapters.Postgres,
+  url:
+    "postgres://bxhirenqdvhqtu:528c613ddc05e69807b09fdc33197fbf6b9b8012595cd24de64517aa666bdb77@ec2-52-213-173-172.eu-west-1.compute.amazonaws.com:5432/diufhptto6ilr",
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  ssl: true
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
