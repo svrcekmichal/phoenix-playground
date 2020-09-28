@@ -14,9 +14,16 @@
     <nav class="light-blue">
       <div class="nav-wrapper container">
         <div class="row">
-          <a href="" class="brand-logo">
+          <a href="<%= Routes.topic_path(@conn, :index) %>" class="brand-logo">
             Discussions
           </a>
+          <ul class="right">
+          <%= if @conn.assigns[:user] do %>
+            <%= link "Sign out", to:  Routes.auth_path(@conn, :request, "github") %>
+          <% else %>
+            <%= link "Sign in", to:  Routes.auth_path(@conn, :request, "github") %>
+          <% end %>
+          </ul>
         </div>
       </div>
     </nav>
