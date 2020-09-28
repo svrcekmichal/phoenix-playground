@@ -5,6 +5,7 @@ defmodule Playground.Topic do
   schema "topics" do
     field :title, :string
     field :description, :string
+    belongs_to :user, Playground.User
     timestamps()
   end
 

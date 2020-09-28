@@ -22,7 +22,10 @@ defmodule PlaygroundWeb.TopicController do
   end
 
   def create(conn, %{"topic" => topic}) do
-    changeset = Topic.changeset(%Topic{}, topic)
+    changeset =
+      conn.assigns[:user]
+      |> Ecto.build_assoc(:topics)
+      |> Topic.changeset(topic)
 
     case Playground.Repo.insert(changeset) do
       {:ok, topic} ->

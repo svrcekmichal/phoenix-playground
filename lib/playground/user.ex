@@ -9,6 +9,7 @@ defmodule Playground.User do
     field :provider, :string
     field :token, :string
     field :avatar, :string
+    has_many :topics, Playground.Topic, foreign_key: :user_id
     timestamps()
   end
 
