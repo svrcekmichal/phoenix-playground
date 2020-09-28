@@ -24,6 +24,7 @@ defmodule PlaygroundWeb.Router do
   scope "/auth", PlaygroundWeb do
     pipe_through :browser
 
+    get "/signout", SessionController, :signout
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
   end
