@@ -4,7 +4,9 @@
     <ul class="collection col s12">
       <%= for topic <- @topics do %>
         <li class="collection-item">
-          <%= topic.title %>
+          <a href="<%= Routes.topic_path(@conn, :show, topic) %>">
+            <%= topic.title %>
+          </a>
           <%= if @conn.assigns.user && @conn.assigns.user.id == topic.user_id do %>
             <div class="right">
               <a href="<%= Routes.topic_path(@conn, :edit, topic) %>">

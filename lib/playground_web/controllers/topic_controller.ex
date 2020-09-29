@@ -12,9 +12,15 @@ defmodule PlaygroundWeb.TopicController do
     render(conn, "index.html", topics: topics)
   end
 
-  def show(conn, _params) do
-    topics = Playground.Repo.all(Topic)
-    render(conn, "index.html", topics: topics)
+  def show(conn, %{"id" => topic_id}) do
+    case Playground.Repo.get(Topic, topic_id) do
+      nil ->
+        conn
+        |> put_flash(:error, "Topic doesn't exist")
+        |> redirect(to: Routes.topic_path(conn, :index))
+      topic ->
+        render(conn, "show.html", topic: topic)
+    end
   end
 
   def new(conn, _params) do

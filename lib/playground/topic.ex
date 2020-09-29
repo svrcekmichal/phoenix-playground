@@ -5,7 +5,8 @@ defmodule Playground.Topic do
   schema "topics" do
     field :title, :string
     field :description, :string
-    belongs_to :user, Playground.User
+    belongs_to :user, Playground.User, foreign_key: :user_id
+    has_many :comments, Playground.Comment, foreign_key: :topic_id
     timestamps()
   end
 
